@@ -4,12 +4,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
-# Load dataset
-df = pd.read_csv("symptoms_dataset.csv")
+# 🔹 Create dataset inside code
+data = {
+    "fever": [1,1,0,1,1,0,1,0,1,0],
+    "cough": [1,1,1,0,0,1,0,0,1,0],
+    "headache": [0,1,1,1,0,0,1,0,1,0],
+    "sore_throat": [1,0,0,0,0,1,1,0,1,0],
+    "fatigue": [1,1,0,1,1,0,0,0,1,0],
+    "disease": ["Flu","COVID-19","Common Cold","Migraine","Typhoid",
+                "Common Cold","Migraine","Typhoid","Flu","Common Cold"]
+}
+df = pd.DataFrame(data)
+
+# Training
 X = df.drop("disease", axis=1)
 y = df["disease"]
-
-# Train model
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 model = DecisionTreeClassifier(max_depth=5, random_state=42)
 model.fit(X_train, y_train)
@@ -30,7 +39,7 @@ headache = st.sidebar.checkbox("Headache")
 sore_throat = st.sidebar.checkbox("Sore throat")
 fatigue = st.sidebar.checkbox("Fatigue")
 
-# Prepare Input
+# Input
 input_data = pd.DataFrame([{
     "fever": int(fever),
     "cough": int(cough),
